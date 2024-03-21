@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outcome</title>
+<script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet"
+integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+crossorigin="anonymous">
+<link rel="stylesheet" href="outcome.css">
+</head>
+<body style="position: relative; min-height: 100vh;">
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center">
+        <i class="fas fa-snowflake fa-lg text-primary mr-2"></i>
+        <strong class="custom-white">Hello, <span id="username">[ nama]</span>! </strong>
+      </a>
+        <button class="navbar-toggler custom-button" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon custom-button"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="main-page.html" class="nav-link font-italic custom-white">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="income.html" class="nav-link font-italic custom-white">Income</a>
+                </li>
+                <li class="nav-item">
+                    <a href="outcome.html" class="nav-link font-italic custom-white">Outcome</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about-us.html" class="nav-link font-italic custom-white">About Us</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="mainPage" class="container mt-5">
+<div id="outcomePage">
+  <h2><strong>Outcome</strong></h2>
+  <form onsubmit="return addTransaction('outcome')"novalidate>
+    <div class="mb-3">
+      <input type="text" class="form-control" id="outcomeName" placeholder="Transaction Name" required>
+    </div>
+    <div class="mb-3">
+      <input type="number" class="form-control" id="outcomeAmount" placeholder="Amount" required>
+    </div>
+    <select id="outcomeCategory">
+      <option value="Food">Makan</option>
+      <option value="Entertainment">Main</option>
+      <option value="Education">Edukasi</option>
+      <option value="Shopping">Belanja</option>
+      <option value="Other">Lainnya</option>
+    </select>
+    <button class="button" id="insert" type="submit">Submit</button>
+  </form>
+</div>
+</div>
+
+  <footer class="bg-dark text-light py-3" id="footer" style="position: absolute; bottom: 0; width: 100%;">
+    <div class="container text-center">
+      <p class="font-italic text-white mb-0">&copy; 2024 Xiomay. All rights reserved.</p>
+    </div>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
+crossorigin="anonymous"></script>
+<script>
+function addTransaction(type) {
+  const name = document.getElementById(`${type}Name`).value;
+  const amount = parseFloat(document.getElementById(`${type}Amount`).value);
+  const category = document.getElementById(`${type}Category`).value;
+
+  if (name && amount && category) {
+    const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    transactions.push({ type, name, amount: amount, category });
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+
+    const currentBalance = parseFloat(localStorage.getItem('balance')) || 0;
+    const newBalance = currentBalance - amount;
+    localStorage.setItem('balance', newBalance.toString());
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Submit Successfully'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = 'main-page.html';
+      }
+    });
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Submit Failed'
+    });
+  }
+
+  return false;
+}
+
+function setUsername() {
+  const username = localStorage.getItem('username');
+  document.getElementById('username').textContent = username;
+}
+
+window.onload = function() {
+  setUsername();
+  loadTransactions();
+};
+document.addEventListener('DOMContentLoaded', function() {
+  const currentBalance = parseFloat(localStorage.getItem('balance')) || 0;
+  document.getElementById('balance').textContent = currentBalance;
+});
+</script>
+</body>
+</html>
