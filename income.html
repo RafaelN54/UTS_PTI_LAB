@@ -13,37 +13,40 @@ crossorigin="anonymous">
 <link rel="stylesheet" href="income.css">
 </head>
 <body style="position: relative; min-height: 100vh;">
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark py-3">
-      <div class="container">
-        <a class="navbar-brand d-flex align-items-center">
-          <i class="fas fa-snowflake fa-lg text-primary mr-2"></i>
-          <strong class="custom-white">Hello, <span id="username">[ nama]</span>! </strong>
-        </a>
-          <button class="navbar-toggler custom-button" type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon custom-button"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav ms-auto">
-                  <li class="nav-item">
-                      <a href="main-page.html" class="nav-link font-italic custom-white">Home</a>
-                  </li>
-                  <li class="nav-item">
-                      <a href="income.html" class="nav-link font-italic custom-white">Income</a>
-                  </li>
-                  <li class="nav-item">
-                      <a href="outcome.html" class="nav-link font-italic custom-white">Outcome</a>
-                  </li>
-                  <li class="nav-item">
-                      <a href="about-us.html" class="nav-link font-italic custom-white">About Us</a>
-                  </li>
-              </ul>
-          </div>
-      </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="image/logo.png" alt="Logo" class="logo mr-2">
+        <strong class="custom-white">Hello, <span id="username">[nama]</span>! </strong>
+    </a>
+        <button class="navbar-toggler custom-button" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon custom-button"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="main-page.html" class="nav-link font-italic custom-white">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="income.html" class="nav-link font-italic custom-white">Income</a>
+                </li>
+                <li class="nav-item">
+                    <a href="outcome.html" class="nav-link font-italic custom-white">Outcome</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about-us.html" class="nav-link font-italic custom-white">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="login.html" id="logoutBtn" class="nav-link font-italic custom-white">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
   </nav>
 
 <div id="mainPage" class="container mt-5">
@@ -103,6 +106,26 @@ function addTransaction(type) {
 
   return false;
 }
+
+document.getElementById('logoutBtn').addEventListener('click', function(event) {
+  event.preventDefault(); 
+
+  Swal.fire({
+    title: 'Logout',
+    text: 'Are you sure you want to logout?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, logout',
+    cancelButtonText: 'No, cancel'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    }
+  });
+});
 
 function setUsername() {
   const username = localStorage.getItem('username');

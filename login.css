@@ -1,0 +1,21 @@
+.gradient-custom {
+    /* fallback for old browsers */
+    background: linear-gradient(to right,  #fff2ab, #F5F5DC);
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right,  #fff2ab, #F5F5DC);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right,  #fff2ab, #F5F5DC);
+}
+
+@media (min-width: 768px) {
+    .gradient-custom {
+        background: linear-gradient(to right,  #fff2ab, #F5F5DC);
+    }
+}
+
+
+.image img{
+    width: 70%;
+}
